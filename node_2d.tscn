@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctjkawt2yncus"]
+
+[ext_resource type="Script" path="res://mpmanager.gd" id="1_fj7il"]
+[ext_resource type="Texture2D" uid="uid://duj02lsxl4akw" path="res://icon.svg" id="2_eogb7"]
+[ext_resource type="PackedScene" uid="uid://dxgvhr2mr7vyj" path="res://player.tscn" id="3_ilb4t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erysb"]
+size = Vector2(128, 128)
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("PortBox", "IPBox")]
+script = ExtResource("1_fj7il")
+PortBox = NodePath("Control/PortBox")
+IPBox = NodePath("Control/IPBox")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PortBox" type="LineEdit" parent="Control"]
+layout_mode = 0
+offset_top = 43.0
+offset_right = 224.0
+offset_bottom = 86.0
+placeholder_text = "port"
+
+[node name="IPBox" type="LineEdit" parent="Control"]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 43.0
+placeholder_text = "IP"
+
+[node name="JoinButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_right = 336.0
+offset_bottom = 43.0
+text = "JOIN"
+
+[node name="HostButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 43.0
+offset_right = 336.0
+offset_bottom = 86.0
+text = "HOST"
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(123, -87)
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(166, 687)
+scale = Vector2(31.165, 1)
+texture = ExtResource("2_eogb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(166, 687)
+scale = Vector2(31.165, 1)
+shape = SubResource("RectangleShape2D_erysb")
+
+[node name="player" parent="." instance=ExtResource("3_ilb4t")]
+position = Vector2(917, 462)
+
+[connection signal="pressed" from="Control/JoinButton" to="." method="_join"]
+[connection signal="pressed" from="Control/HostButton" to="." method="_host"]
